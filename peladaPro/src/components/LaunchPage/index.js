@@ -22,7 +22,7 @@ const LaunchPage = () => {
     if(currentScreen === 'LogInPage'){
         return <LogInPage goBack={goBack}/>
     }else if(currentScreen === 'RegisterPage'){
-        return <Register goBack={goBack}/>
+        return <Register goBack={goBack} navigateToLogin={navigateLogIn}/>
     }
 
     return(

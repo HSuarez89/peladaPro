@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Keyboard, Pressable, Alert } f
 import styles from "./styles";
 import { supabase } from "../../services/supabase";
 
-const Register = ({ goBack }) => {
+const Register = ({ goBack, navigateToLogin }) => {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [telefone, setTelefone] = useState('');
@@ -18,7 +18,13 @@ const Register = ({ goBack }) => {
                 Alert.alert("Erro no cadastro", error.message);
             } else {
                 // Se o cadastro foi bem-sucedido e não há erro
-                Alert.alert('Cadastro realizado com sucesso! Por favor, verifique seu e-mail.');
+                Alert.alert(
+                    'Cadastro realizado com sucesso!',
+                    'Por favor, verifique seu e-mail cadastrado para continuar.',
+                    [
+                        { text: "OK", onPress: () => navigateToLogin() } // Agora deve funcionar
+                    ]
+                );
             }
         } else {
             Alert.alert('Todos os campos são obrigatórios');
