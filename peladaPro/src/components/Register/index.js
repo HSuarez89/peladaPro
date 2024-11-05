@@ -9,20 +9,32 @@ const Register = ({ goBack, navigateToLogin }) => {
     const [telefone, setTelefone] = useState('');
     const [password, setPassword] = useState('');
 
+
     async function handleSignUp() {
         if (nome && email && telefone && password) {
+
             const { user, error } = await supabase.auth.signUp({ email, password });
 
             if (error) {
                 console.error(error);
                 Alert.alert("Erro no cadastro", error.message);
             } else {
-                // Se o cadastro foi bem-sucedido e não há erro
+                const { error: insertError } = await supabase
+                    .from('users')
+                    .insert([
+                        { nome, telefone, email }
+                    ]);
+
+                if (insertError) {
+                    console.error(insertError);
+                    Alert.alert("Erro ao salvar informações do usuário", insertError.message);
+                    return;
+                }
                 Alert.alert(
                     'Cadastro realizado com sucesso!',
                     'Por favor, verifique seu e-mail cadastrado para continuar.',
                     [
-                        { text: "OK", onPress: () => navigateToLogin() } // Agora deve funcionar
+                        { text: "OK", onPress: () => navigateToLogin() }
                     ]
                 );
             }

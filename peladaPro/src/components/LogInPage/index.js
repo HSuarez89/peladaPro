@@ -2,11 +2,18 @@ import React, { useState } from "react"
 import { View, Text, TextInput, TouchableOpacity, Keyboard, Pressable, Alert } from "react-native"
 import styles from "./styles"
 import { supabase } from "../../services/supabase";
+import Profile from "../Profile";
 
 const LogInPage = ({goBack}) => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [currentScreen, setCurrentScreen] = useState("")
+
+    if(currentScreen === 'Profile'){
+        return <Profile/>
+    }
+
 
     async function handleSignIn() {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -16,7 +23,13 @@ const LogInPage = ({goBack}) => {
         }else{
             console.log("Login Realizado com sucesso")
         }
-        Alert.alert("Login realizado com sucesso")
+        Alert.alert(
+            "Login realizado com sucesso",
+            "Você será redirecionado para a página de perfil.",
+            [
+                { text: "OK", onPress: () => setCurrentScreen('Profile') }
+            ]
+        );
     }
 
     return(
