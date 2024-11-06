@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     register: {
         fontSize: 40,
         fontWeight: 'bold',
-        marginBottom: 90
+        marginBottom: 20
     }
 })
 
